@@ -1,88 +1,60 @@
-<img src="https://github.com/remotion-dev/template-next/assets/1629785/9092db5f-7c0c-4d38-97c4-5f5a61f5cc098" />
-<br/>
-<br/>
+# Vidéo de présentation PAIEX+
 
-This is a Next.js template for building programmatic video apps, with [`@remotion/player`](https://remotion.dev/player) and [`@remotion/lambda`](https://remotion.dev/lambda) built in.
+Vidéo promotionnelle de 60 s pour **PAIEX+, par G2S** — « la mémoire digitale de la paie de votre entreprise » — réalisée avec [Remotion](https://www.remotion.dev) (React + TypeScript).
 
-Tailwind CSS is included.
+Cadrage, charte, conventions et backlog : [`TASK.md`](TASK.md). Historique : [`CHANGELOG.md`](CHANGELOG.md).
 
-<img src="https://github.com/remotion-dev/template-next/assets/1629785/c9c2e5ca-2637-4ec8-8e40-a8feb5740d88" />
+## Compositions
 
-## Getting Started
+| Identifiant | Format | Usage |
+|---|---|---|
+| `PaiexPromo` | 1920×1080, 30 i/s, 60 s | Version maîtresse 16:9 |
+| `PaiexPromoVertical` | 1080×1920, 30 i/s, 60 s | Stories / reels 9:16 |
+| `Scenes/S01-Accroche` … `S09-Appel` | 1920×1080 | Chaque scène seule, pour la relecture |
 
-[Use this template](https://github.com/new?template_name=template-next-app-dir-tailwind&template_owner=remotion-dev) to clone it into your GitHub account. Run
+Tous les textes, chiffres, URL et chemins audio sont des props (schéma Zod dans `src/remotion/schema.ts`) et se modifient dans le panneau des props du Studio.
 
-```
-npm i --loglevel=error
-```
+## Commandes
 
-afterwards. Alternatively, use this command to scaffold a project:
-
-```
-npx create-video@latest --next
-```
-
-## Commands
-
-Start the Next.js dev server:
-
-```
-npm run dev
+```bash
+npm i                 # installation
+npm run studio        # aperçu interactif (Remotion Studio)
+npm run render:16x9   # rendu 16:9 -> out/paiex-promo-16x9.mp4
+npm run render:9x16   # rendu 9:16 -> out/paiex-promo-9x16.mp4
+npm run still:poster  # image d'aperçu -> out/paiex-poster.png
+npm run lint          # ESLint
+npm run typecheck     # tsc --noEmit
 ```
 
-Open the Remotion Studio:
+Rendu minimal demandé dans le brief :
 
-```
-npx remotion studio
-```
-
-Render a video locally:
-
-```
-npx remotion render
+```bash
+npx remotion render PaiexPromo out/paiex-promo.mp4 --codec h264
 ```
 
-Upgrade Remotion:
+Les livrables finaux suivent le nommage `PAIEX_promo_<format>_v<NN>_<AAAAMMJJ>.mp4` (TASK.md § 3.6).
+
+## Arborescence
 
 ```
-npx remotion upgrade
+src/remotion/
+  Root.tsx          compositions et calcul de la durée (calculateMetadata)
+  PaiexPromo.tsx    enchaînement des 9 scènes (TransitionSeries), musique, bruitages
+  theme.ts          couleurs, polices, courbe d'animation, tempo, zones de sécurité
+  schema.ts         schéma Zod des props + valeurs par défaut
+  timing.ts         durées des scènes et des transitions
+  scenes/           S01Hook … S09Cta
+  components/       BrowserFrame, Cursor, FloatingCard, AnimatedTitle, Kicker, Logo,
+                    Background, SafeArea, Fragments, FeatureHeader, Highlight, framboiseWipe
+public/captures/    captures d'écran (données fictives uniquement)
+public/audio/       musique et bruitages
+assets/licences/    licences de la musique et des bruitages
 ```
 
-The following script will set up your Remotion Bundle and Lambda function on AWS:
+## Son
 
-```
-node deploy.mjs
-```
+La musique et les bruitages sont facultatifs. Déposer les fichiers dans `public/audio/` puis renseigner les props `audio.musicSrc`, `audio.whooshSrc` et `audio.clickSrc` (ex. `audio/musique.mp3`). Fondu d'entrée 0,5 s, fondu de sortie 1,5 s ; bruitages à `audio.sfxGainDb` (−15 dB par défaut) sous la musique. Enregistrer la licence dans `assets/licences/` avant toute livraison.
 
-You should run this script after:
+## Application Next.js et Lambda
 
-- changing the video template
-- changing `config.mjs`
-- upgrading Remotion to a newer version
-
-## Set up rendering on AWS Lambda
-
-This template supports rendering the videos via [Remotion Lambda](https://remotion.dev/lambda).
-
-1. Copy the `.env.example` file to `.env` and fill in the values.
-   Complete the [Lambda setup guide](https://www.remotion.dev/docs/lambda/setup) to get your AWS credentials.
-
-1. Edit the `config.mjs` file to your desired Lambda settings.
-
-1. Run `node deploy.mjs` to deploy your Lambda function and Remotion Bundle.
-
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://remotion.dev/discord).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://remotion.dev/issue).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+Le projet vient du modèle Remotion + Next.js : `npm run dev` affiche la vidéo dans un `<Player>`. Le rendu sur AWS Lambda (`src/lambda`, `src/app/api/lambda`, `deploy.mjs`, `config.mjs`) est conservé mais inutilisé : le rendu se fait en local (TASK.md § 1.5, tâche 1.2 à trancher).
