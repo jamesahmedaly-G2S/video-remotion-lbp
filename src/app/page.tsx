@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { z } from "zod";
 import {
   CompositionProps,
-  defaultMyCompProps,
+  defaultCompProps,
   DURATION_IN_FRAMES,
   VIDEO_FPS,
   VIDEO_HEIGHT,
@@ -15,14 +15,16 @@ import {
 import { RenderControls } from "../components/RenderControls";
 import { Spacing } from "../components/Spacing";
 import { Tips } from "../components/Tips";
-import { Main } from "../remotion/MyComp/Main";
+import { PaiexPromo } from "../remotion/PaiexPromo";
 
 const Home: NextPage = () => {
-  const [text, setText] = useState<string>(defaultMyCompProps.title);
+  // Le champ texte modifie la promesse de la scène finale.
+  const [text, setText] = useState<string>(defaultCompProps.cta.tagline);
 
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
-      title: text,
+      ...defaultCompProps,
+      cta: { ...defaultCompProps.cta, tagline: text },
     };
   }, [text]);
 
@@ -31,7 +33,7 @@ const Home: NextPage = () => {
       <div className="max-w-screen-md m-auto mb-5 px-4">
         <div className="overflow-hidden rounded-geist shadow-[0_0_200px_rgba(0,0,0,0.15)] mb-10 mt-16">
           <Player
-            component={Main}
+            component={PaiexPromo}
             inputProps={inputProps}
             durationInFrames={DURATION_IN_FRAMES}
             fps={VIDEO_FPS}
