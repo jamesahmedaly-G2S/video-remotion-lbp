@@ -1,21 +1,22 @@
 {
-  "name": "video_paiex",
+  "name": "paiex-promo-video",
   "version": "0.1.0",
   "private": true,
+  "description": "Vidéo de présentation PAIEX+ (par G2S), réalisée avec Remotion",
   "author": {
-    "name": "Mohit Yadav",
-    "email": "mohit@mohitya.dev",
-    "url": "https://mohitya.dev"
+    "name": "G2S"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.535",
     "@remotion/cli": "4.0.535",
     "@remotion/google-fonts": "4.0.535",
     "@remotion/lambda": "4.0.535",
+    "@remotion/media": "4.0.535",
     "@remotion/paths": "4.0.535",
     "@remotion/player": "4.0.535",
     "@remotion/shapes": "4.0.535",
     "@remotion/tailwind-v4": "4.0.535",
+    "@remotion/transitions": "4.0.535",
     "clsx": "2.1.1",
     "next": "16.4.0",
     "react": "19.2.3",
@@ -25,21 +26,21 @@
     "zod": "4.5.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.2.0",
-    "@remotion/eslint-plugin": "4.0.535",
     "@eslint/eslintrc": "3.1.0",
     "@eslint/js": "9.38.0",
+    "@next/eslint-plugin-next": "15.1.6",
+    "@remotion/eslint-plugin": "4.0.535",
+    "@tailwindcss/postcss": "4.2.0",
     "@types/node": "20.12.14",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@types/web": "0.0.166",
+    "@typescript-eslint/eslint-plugin": "8.46.0",
+    "@typescript-eslint/parser": "8.46.0",
     "autoprefixer": "10.4.20",
     "dotenv": "17.3.1",
     "eslint": "9.39.5",
-    "@next/eslint-plugin-next": "15.1.6",
     "eslint-config-next": "15.1.6",
-    "@typescript-eslint/eslint-plugin": "8.46.0",
-    "@typescript-eslint/parser": "8.46.0",
     "postcss": "8.5.23",
     "prettier": "3.8.1",
     "tailwindcss": "4.2.0",
@@ -52,7 +53,12 @@
     "start": "next start",
     "lint": "eslint .",
     "remotion": "remotion studio",
+    "studio": "remotion studio",
     "render": "remotion render",
+    "render:16x9": "remotion render PaiexPromo out/paiex-promo-16x9.mp4 --codec h264 --crf 18 --pixel-format yuv420p --audio-bitrate 320k",
+    "render:9x16": "remotion render PaiexPromoVertical out/paiex-promo-9x16.mp4 --codec h264 --crf 18 --pixel-format yuv420p --audio-bitrate 320k",
+    "still:poster": "remotion still PaiexPromo out/paiex-poster.png --frame 540",
+    "typecheck": "tsc --noEmit",
     "deploy": "node deploy.mjs"
   }
 }

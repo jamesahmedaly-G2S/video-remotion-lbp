@@ -21,6 +21,9 @@ export default [
       "next-env.d.ts",
       "next.config.js",
       "deploy.mjs",
+      // Outillage des agents (skills installés), hors code de la vidéo
+      ".agents/**",
+      ".claude/**",
     ],
   },
   // Base JS recommended
