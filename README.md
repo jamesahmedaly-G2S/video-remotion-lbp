@@ -58,3 +58,4 @@ La musique et les bruitages sont facultatifs. Déposer les fichiers dans `public
 ## Application Next.js et Lambda
 
 Le projet vient du modèle Remotion + Next.js : `npm run dev` affiche la vidéo dans un `<Player>`. Le rendu sur AWS Lambda (`src/lambda`, `src/app/api/lambda`, `deploy.mjs`, `config.mjs`) est conservé mais inutilisé : le rendu se fait en local (TASK.md § 1.5, tâche 1.2 à trancher).
+# video-remotion-lbp
