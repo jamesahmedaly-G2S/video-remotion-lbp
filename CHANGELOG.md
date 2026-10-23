@@ -32,6 +32,10 @@ Rubriques : `Ajouté`, `Modifié`, `Corrigé`, `Supprimé`, `Livré`.
 - `package.json` : nom `paiex-promo-video`, auteur G2S. `README.md` réécrit pour le projet.
 - ESLint ignore les dossiers d'outillage `.agents/` et `.claude/`.
 
+### Corrigé
+
+- S2 Problème : guillemet fermant « » » ajouté à la fin de la question (framboise, apparaît après le dernier mot, jamais seul en début de ligne). Nouvelle option `trailing` sur `AnimatedTitle`.
+
 ### Supprimé
 
 - Composition de démonstration du modèle (`src/remotion/MyComp/`, dont `NextLogo`).

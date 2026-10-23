@@ -17,6 +17,8 @@ type Props = {
   readonly align?: "left" | "center";
   readonly lineHeight?: number;
   readonly style?: React.CSSProperties;
+  /** Élément ajouté après le dernier mot (ex. guillemet fermant), animé à sa suite. */
+  readonly trailing?: React.ReactNode;
 };
 
 /**
@@ -37,6 +39,7 @@ export const AnimatedTitle: React.FC<Props> = ({
   align = "left",
   lineHeight = 1.06,
   style,
+  trailing,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -71,8 +74,12 @@ export const AnimatedTitle: React.FC<Props> = ({
             {words.map((word, wi) => {
               const i = mode === "word" ? index++ : lineIndex;
               const p = enter(frame, fps, delay + i * step);
+              // Le dernier élément (ex. guillemet fermant) reste collé au dernier mot.
+              const withTrailing =
+                trailing !== undefined && li === lines.length - 1 && wi === words.length - 1;
+              const pt = enter(frame, fps, delay + (mode === "word" ? i + 1 : i) * step);
               return (
-                <span key={wi}>
+                <span key={wi} style={withTrailing ? { whiteSpace: "nowrap" } : undefined}>
                   <span
                     style={{
                       display: "inline-block",
@@ -83,6 +90,19 @@ export const AnimatedTitle: React.FC<Props> = ({
                   >
                     {word}
                   </span>
+                  {withTrailing ? (
+                    <span
+                      style={{
+                        display: "inline-block",
+                        marginLeft: "0.25em",
+                        opacity: pt,
+                        translate: `0px ${interpolate(pt, [0, 1], [30, 0])}px`,
+                        filter: pt < 1 ? `blur(${interpolate(pt, [0, 1], [8, 0])}px)` : undefined,
+                      }}
+                    >
+                      {trailing}
+                    </span>
+                  ) : null}
                   {wi < words.length - 1 ? " " : null}
                 </span>
               );

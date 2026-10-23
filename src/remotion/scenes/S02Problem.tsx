@@ -85,6 +85,9 @@ export const S02Problem: React.FC<PaiexProps> = ({ hook, problem }) => {
             color={colors.carbone}
             align="center"
             lineHeight={1.1}
+            trailing={
+              <span style={{ color: colors.framboise, fontWeight: 700 }}>»</span>
+            }
           />
         </div>
       </AbsoluteFill>
